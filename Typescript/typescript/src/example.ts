@@ -400,5 +400,26 @@ function getEmployee():Person1 | DogOwners | Manager1{
         }
     }
 }
+const employee1 : Person1 | Manager1 | DogOwners = getEmployee();
+console.log(employee1);
 
-console.log(getEmployee());
+//implement type guard
+function IsManager(obj:Person1 | Manager1 | DogOwners):boolean{
+    return 'managePeople' in obj; //we looking if we have a specific property in the obj that is only appear in the Manager1 interfaces
+}
+
+console.log(IsManager(employee1));
+/* but its not working sadly 
+
+if(IsManager(employee1)){
+    console.log(employee1.managePeople()); //error
+} */
+
+function CorrectIsManager(obj:Person1 | Manager1 | DogOwners):obj is Manager1{
+    return 'managePeople' in obj; //we looking if we have a specific property in the obj that is only appear in the Manager1 interfaces
+}
+
+//now its working
+if(CorrectIsManager(employee1)){
+    employee1.managePeople(); //error
+}
