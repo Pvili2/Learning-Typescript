@@ -636,3 +636,152 @@ function getColorName(color: Color){
 
 //after, we dont have name collision
 const something = 'valmai';
+
+//Type guard in TS
+
+//type guard challenge 1
+type TypeValue = string | number |boolean;
+
+const random1 = Math.random();
+
+let value = random1 < 0.33 ? "Hello" : random1 < 0.66 ? 123.456 : true; 
+
+function checkValue(val : TypeValue){
+    if (typeof val === "string") {
+        return val.toLowerCase();
+    }
+
+    if (typeof val === "number") {
+       return val.toFixed(2)
+    }else{
+        return "Boolean: " + val;
+    }
+}
+
+console.log(checkValue(value));
+
+//type guard challenge 2
+
+type Dog = {type: 'dog', name: string, bark: ()=> void}
+type Cat = {type: 'cat', name: string, meow: ()=> void}
+type Animal = Dog | Cat;
+
+function makeSound(animal : Animal){
+   /*  if (animal.type === "dog") {
+        animal.bark();
+    }else{
+        animal.meow();
+    } */
+
+    //another way
+    if("bark" in animal){
+        animal.bark();
+    }else{
+        animal.meow();
+    }
+}
+
+makeSound({type: "dog", name: "john", bark(){
+    console.log('vau')
+}});
+
+//Truthy / falsy type guard challenge 3
+
+function printLength(str : string | null | undefined){
+    if(str){
+        //in this block, typescript knows that 'str' is a string (because null and undefined are not truthy)
+        console.log(str.length);
+    }else{
+        console.log('No string provided');
+    }
+}
+
+printLength(undefined);
+
+//type guard challenge 4
+
+try {
+    throw new Error('Some error');
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(error.message);
+    }
+}
+
+function checkInput(input: Date | string):string{
+    if(input instanceof Date){
+        return input.toISOString();
+    }
+
+    return input;
+}
+
+console.log(checkInput("2023-03-02"));
+
+//Type predicate
+
+type Student = {
+    name: string;
+    study: () => void;
+  };
+  
+  type User3 = {
+    name: string;
+    login: () => void;
+  };
+  
+  type Person2 = Student | User3;
+  
+  const randomPerson = (): Person2 => {
+    return Math.random() > 0.5
+      ? { name: 'john', study: () => console.log('Studying') }
+      : { name: 'mary', login: () => console.log('Logging in') };
+  };
+  
+  const person2 = randomPerson();
+
+function isStudent(person: Person2):person is Student{ //not boolean
+    return "study" in person;
+}
+
+if(isStudent(person2)){
+    person2.study();
+}
+
+//Discriminated Unions
+
+type IncrementAction = {
+    type: 'increment',
+    amount: number;
+    timestamp: number;
+    user: string;
+  };
+  
+  type DecrementAction = {
+    type: 'decrement'
+    amount: number;
+    timestamp: number;
+    user: string;
+  };
+  
+  type Action = IncrementAction | DecrementAction;
+
+  function reducer(state:number, action: Action){
+    //we cant use any type guards because the property names are the same, we have to add a new property to create unique alias
+
+    switch (action.type) {
+        case 'increment':
+            return state + action.amount;
+        case 'decrement':
+            return state - action.amount;
+        default:
+            const unexpectedAction:never = action;
+    }
+  }
+
+  const newState = reducer(15, {
+    type:'increment',
+    amount: 10,
+    timestamp: 10,
+    user: "dd"
+  });
