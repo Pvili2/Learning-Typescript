@@ -622,4 +622,17 @@ function getColorName(color: Color){
     }
 }
 
-console.log(getColorName(Color.Red));
+//Module in TS
+
+//TS automatically use global scope, so we cant use the same variable names
+//const random = 5 -> error because we have a variable called random in actions.ts
+
+//to fixed, export the variable from actions.ts and import for here
+
+//now we access the variable
+//console.log(something)
+
+//or we add the moduleDetection = "force" property to the tsconfig.json
+
+//after, we dont have name collision
+const something = 'valmai';
