@@ -785,3 +785,6 @@ type IncrementAction = {
     timestamp: 10,
     user: "dd"
   });
+
+//Generics
+

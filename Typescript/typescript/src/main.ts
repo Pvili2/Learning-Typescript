@@ -1,6 +1,7 @@
 import './style.css'
 import { setupCounter } from './counter.ts'
 import "./example.ts"
+import "./generics.ts"
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
