@@ -549,3 +549,77 @@ type User2 = {
 const statusValue = "Pending" as Status;
 
 const userInstance = {name: "Valmai", status: statusValue}
+
+//the unknown type
+
+let unknownValue:unknown = "hello world";
+
+//we have no functions in this type just as any, we must check what is the type of the variable
+
+if(typeof unknownValue === "string"){
+    unknownValue = unknownValue.toUpperCase();
+}
+
+//in try-catch block, the error type is unknow
+
+function throwError(){
+    let random = Math.random();
+
+    if(random < 0.5){
+        throw Error('Error!');
+    }else{
+        throw 'something';
+    }
+}
+
+try {
+    throwError();
+} catch (error) {
+    if(error instanceof Error){ //we check that the error is an instance of the Error class
+        console.log(error.message);
+    }
+}
+
+//type never
+
+//we cannot assign it to a variable
+//let value:never = 0; -> error
+
+type ColorTheme = "light" | "dark"
+
+function CheckTheme(theme: ColorTheme):void{
+    if (theme === "light") {
+        console.log('light theme')
+        return;
+    }
+
+    if (theme === "dark") {
+        console.log('dark theme')
+        return;
+    }
+    // we check all options that is possible, so if we try to assign the theme in here, the type is never, because the code never reach here
+    theme; //type never
+}
+
+//When we use never?
+
+enum Color{
+    Red,
+    Blue
+}
+
+function getColorName(color: Color){
+    switch (color) {
+        case Color.Blue:
+            return 'blue'
+        case Color.Red:
+            return 'red'
+        default:
+        //build time handle (correct way)
+        let unexpectedColor: never = color;
+        //runtime handle
+        throw new Error('Unexpected color value: '+color);
+    }
+}
+
+console.log(getColorName(Color.Red));
