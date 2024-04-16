@@ -453,4 +453,60 @@ function getPerson():[string, number]{
 
 let optionalData: [string, number?] = ['John']; //['John',24] also works
 
+//Enum in TypeScript
 
+//basic enum declaration
+enum ServerResponseStatus{
+    Success = 200, // Success = 100
+    Failed = 404,
+    Error = "Error" // this will be any type
+}
+
+Object.values(ServerResponseStatus).forEach((value) =>{
+    console.log(value);
+})
+
+interface ServerResponse{
+    result : ServerResponseStatus,
+    data: string[]
+}
+
+function getServerResponse():ServerResponse{
+    return {
+        result: ServerResponseStatus.Error, //enum value
+        data: ['Johnny', 'Walker']
+    }
+}
+
+const response:ServerResponse  = getServerResponse();
+console.log(response);
+
+//Enum challenge
+
+enum UserRole{
+    Admin, 
+    Manager,
+    Employee
+}
+
+type Users = {
+    id: number,
+    name: string,
+    role: UserRole,
+    contact: [string, string]
+}
+
+function createUsers(obj: Users): Users{
+    return obj;
+}
+
+const person1: Users = {
+    id: 1,
+    name: 'John',
+    role: UserRole.Employee,
+    contact: ['pvil@gmail.com', '06704674848']
+}
+
+let newUser = createUsers(person1);
+
+console.log(newUser);
