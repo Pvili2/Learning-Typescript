@@ -510,3 +510,42 @@ const person1: Users = {
 let newUser = createUsers(person1);
 
 console.log(newUser);
+
+//how to tell the browser what type is the variable
+
+let someValue:any= 'This is a string'
+
+let strLength:number = (someValue as string).length;
+
+console.log(strLength);
+
+//with json
+
+type Bird = {
+    name: string,
+}
+
+let birdString = '{"name": "Eagle"}';
+let birdString2 = '{"name": "Hawk"}';
+
+//if we parse to JSON the type is any, which is not good for us
+let birdObj = JSON.parse(birdString);
+
+//but if we use the "as" keyword: the type is JSON, which is good for us (we can use JSON functions)
+
+let birdObjCorrect = JSON.parse(birdString) as JSON;
+
+enum Status {
+    Pending = 'Pending',
+    Declined = 'Declined'
+}
+
+type User2 = {
+    name: string,
+    status: Status
+}
+
+//define the type to Enum
+const statusValue = "Pending" as Status;
+
+const userInstance = {name: "Valmai", status: statusValue}
