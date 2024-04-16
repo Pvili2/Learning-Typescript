@@ -423,3 +423,34 @@ function CorrectIsManager(obj:Person1 | Manager1 | DogOwners):obj is Manager1{
 if(CorrectIsManager(employee1)){
     employee1.managePeople(); //error
 }
+
+//Tuples in TypeScript
+//this is an array
+let data:(string | number)[] = ['John',25 ]
+
+//this array must be contain first a string and then a number. This is a Tuple
+let anotherData: [string, number] = ['Something', 122]
+
+//data with fix numbers
+
+let date:[number, number, number] = [1,1,1]; 
+
+//but we can add more data to the array
+date.push(100);
+console.log(date);
+
+//to prevent it, we must setup readonly
+
+let readonlyDate: readonly[number, number, number] = [1,1,1]; 
+
+//function that returns fix length array
+
+function getPerson():[string, number]{
+    return ['doe', 10];
+}
+
+//Tuple with optional data
+
+let optionalData: [string, number?] = ['John']; //['John',24] also works
+
+
