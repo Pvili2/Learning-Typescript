@@ -1,6 +1,8 @@
 
 //create the function that create any type
 
+import { Error } from "mongoose";
+
 function createAny<T>(arg: T): T{
     return arg;
 }
@@ -97,5 +99,42 @@ type Car = {
   const storeNumbers: StoreData<number> = {
     data: [1,2,3,5,6]
   }
-  console.log(storeNumbers);
-  
+console.log(storeNumbers);
+
+//TS fetch data
+const url =  'https://www.course-api.com/react-tours-project'
+
+
+interface Tour{
+  id: string,
+  name: string,
+  info: string,
+  image: string,
+  price: string 
+}
+
+//every async function return type is a Promise generic
+async function fetchData (url : string): Promise<Tour[]>{
+  try {
+    const response = await fetch(url);
+    if(!response.ok){
+      throw new Error('There was an error with fetching data!');
+    }
+
+    const data: Tour[] = await response.json();
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : "An error occurred";
+    console.log(errorMsg);
+    return [];
+  }
+}
+
+//the variable type is any because we dont know what data we fetch
+const tours = await fetchData(url);
+
+tours.map((item)=>{
+  console.log(item.price);
+})
