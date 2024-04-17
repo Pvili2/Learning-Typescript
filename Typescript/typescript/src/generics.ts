@@ -1,7 +1,5 @@
-
+import {z} from 'zod';
 //create the function that create any type
-
-import { Error } from "mongoose";
 
 function createAny<T>(arg: T): T{
     return arg;
@@ -104,14 +102,16 @@ console.log(storeNumbers);
 //TS fetch data
 const url =  'https://www.course-api.com/react-tours-project'
 
+// implement a schema with zod libray, zod is check the type and other property limitations in RUNTIME
+const tourSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  info: z.string(),
+  image: z.string(),
+  price: z.string() 
+})
 
-interface Tour{
-  id: string,
-  name: string,
-  info: string,
-  image: string,
-  price: string 
-}
+type Tour = z.infer<typeof tourSchema>;
 
 //every async function return type is a Promise generic
 async function fetchData (url : string): Promise<Tour[]>{
@@ -121,10 +121,15 @@ async function fetchData (url : string): Promise<Tour[]>{
       throw new Error('There was an error with fetching data!');
     }
 
-    const data: Tour[] = await response.json();
-    console.log(data);
+    const rawData: Tour[] = await response.json();
+    
+    //check the parse
+    const result = tourSchema.array().safeParse(rawData);
 
-    return data;
+    if(!result.success){
+      throw new Error(`Invalid data: ${result.error} `)
+    }
+    return result.data;
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : "An error occurred";
     console.log(errorMsg);
