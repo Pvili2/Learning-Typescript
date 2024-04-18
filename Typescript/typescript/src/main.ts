@@ -5,7 +5,7 @@ import "./generics.ts"
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
-    <a href="https://vitejs.dev" target="_blank">
+    <a href="../tasks.html" target="_blank">hello
     </a>
     <a href="https://www.typescriptlang.org/" target="_blank">
     </a>

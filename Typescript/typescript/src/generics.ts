@@ -140,6 +140,8 @@ async function fetchData (url : string): Promise<Tour[]>{
 //the variable type is any because we dont know what data we fetch
 const tours = await fetchData(url);
 
+
+
 tours.map((item)=>{
   console.log(item.price);
 })
