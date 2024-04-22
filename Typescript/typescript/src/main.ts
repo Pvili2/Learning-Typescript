@@ -2,6 +2,7 @@ import './style.css'
 import { setupCounter } from './counter.ts'
 import "./example.ts"
 import "./generics.ts"
+import "./complexAlgorithm.ts"
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
