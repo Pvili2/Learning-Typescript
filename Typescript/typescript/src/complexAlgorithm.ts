@@ -1,5 +1,5 @@
 const numbers1: number[] = [1,2,3,4,5,7,11]; // ordered array / set
-const numbers2: number[] = [3,4,5];
+const numbers2: number[] = [3,4,5,9];
 const length1 = numbers1.length;
 const length2 = numbers2.length;
 function BinarySearch(numbers : number[], length: number, searchedValue: number):number{
@@ -89,4 +89,29 @@ function arrayIsSubset(numbers1 : number[], length1: number, numbers2: number[],
     return i >= length1;
 }
 
+//numbers2 is a subset of numbers1? --- true/false
 console.log(arrayIsSubset(numbers2, length2, numbers1, length1));
+
+function arraysSection(numbers1: number[], length1: number, numbers2: number[], length2:number): number[]{
+    let i = 0;
+    let j = 0;
+    let section : number[] = new Array(length1 + length2);
+    let db = 0;
+    while(i < length1 && j < length2){
+        if(numbers1[i] < numbers2[j]){
+            i++;
+        }else{
+            if(numbers1[i] >numbers2[j]){
+                j++;
+            }else{
+                section[db] = numbers1[i];
+                db++;
+                i++;
+                j++;
+            }
+        }
+    }
+    return section;
+}
+
+console.log(deleteNullValues(arraysSection(numbers1, length1, numbers2, length2)));
