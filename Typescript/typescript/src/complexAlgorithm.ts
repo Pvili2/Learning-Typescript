@@ -74,3 +74,19 @@ function deleteNullValues(numbers : number[]): number[] {
 }
 
 console.log(deleteNullValues(Union(numbers1, length1, numbers2, length2)));
+
+function arrayIsSubset(numbers1 : number[], length1: number, numbers2: number[], length2: number):boolean{
+    let i = 0;
+    let j = 0;
+
+    while(i < length1 && j < length2 && numbers1[i] >= numbers2[j]){
+        if(numbers1[i] == numbers2[j]){
+            i++;
+        }
+        j++;
+    }
+
+    return i >= length1;
+}
+
+console.log(arrayIsSubset(numbers2, length2, numbers1, length1));
